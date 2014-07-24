@@ -1,0 +1,519 @@
+<!DOCTYPE HTML>
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+<link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/splash/splash-icon.png">
+<link rel="apple-touch-startup-image" href="images/splash/splash-screen.png" 			media="screen and (max-device-width: 320px)" />  
+<link rel="apple-touch-startup-image" href="images/splash/splash-screen@2x.png" 		media="(max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2)" /> 
+<link rel="apple-touch-startup-image" sizes="640x1096" href="images/splash/splash-screen@3x.png" />
+<link rel="apple-touch-startup-image" sizes="1024x748" href="images/splash/splash-screen-ipad-landscape" media="screen and (min-device-width : 481px) and (max-device-width : 1024px) and (orientation : landscape)" />
+<link rel="apple-touch-startup-image" sizes="768x1004" href="images/splash/splash-screen-ipad-portrait.png" media="screen and (min-device-width : 481px) and (max-device-width : 1024px) and (orientation : portrait)" />
+<link rel="apple-touch-startup-image" sizes="1536x2008" href="images/splash/splash-screen-ipad-portrait-retina.png"   media="(device-width: 768px)	and (orientation: portrait)	and (-webkit-device-pixel-ratio: 2)"/>
+<link rel="apple-touch-startup-image" sizes="1496x2048" href="images/splash/splash-screen-ipad-landscape-retina.png"   media="(device-width: 768px)	and (orientation: landscape)	and (-webkit-device-pixel-ratio: 2)"/>
+
+<title>Epsilon Mobile Framework - Version 2.0</title>
+
+<link href="styles/style.css"     		rel="stylesheet" type="text/css">
+<link href="styles/framework.css" 		rel="stylesheet" type="text/css">
+<link href="styles/owl.carousel.css" 	 rel="stylesheet" type="text/css">
+<link href="styles/owl.theme.css" 		rel="stylesheet" type="text/css">
+<link href="styles/swipebox.css"		 rel="stylesheet" type="text/css">
+<link href="styles/colorbox.css"		 rel="stylesheet" type="text/css">
+
+<script type="text/javascript" src="scripts/jquery.js"></script>
+<script type="text/javascript" src="scripts/jqueryui.js"></script>
+<script type="text/javascript" src="scripts/owl.carousel.min.js"></script>
+<script type="text/javascript" src="scripts/jquery.swipebox.js"></script>
+<script type="text/javascript" src="scripts/colorbox.js"></script>
+<script type="text/javascript" src="scripts/snap.js"></script>
+<script type="text/javascript" src="scripts/contact.js"></script>
+<script type="text/javascript" src="scripts/custom.js"></script>
+<script type="text/javascript" src="scripts/framework.js"></script>
+<script type="text/javascript" src="scripts/framework.launcher.js"></script>
+<script type="text/javascript" src="scripts/menuHeight.js"></script>
+<script type="text/javascript" src="cordova.js"></script>
+<script type="text/javascript" src="scripts/load.js"></script>
+
+</head>
+<body onload="onLoad()">
+
+<div id="preloader">
+	<div id="status">
+    	<p class="center-text">
+            Cargando Ficha Técnica de Plagas y Enfermedades...            
+        </p>
+    </div>
+</div>
+
+
+<div class="all-elements-adaptado">
+    <div id="sidebar" class="page-sidebar">
+        <div class="page-sidebar-scroll">
+			<div id="contentMenu" class="sidebar-content-background scroll">
+                <div class="sidebar-section">
+                    <a href="#" class="sidebar-close"></a>
+                    <em>Menu</em>
+                </div>
+                <div class="sidebar-decoration"></div>         
+                
+                <a href="#" class="sidebar-logo"></a>   
+                <p class="sidebar-paragraph">Tú Doctor de Confianza</p>              
+                
+                                
+                <div class="sidebar-navigation">                              
+                    <div class="nav-item">
+                        <a href="acerca.html" class="nav-regular">Acerca de Mí</a>
+                    </div>
+                    <div class="nav-item plagas PlagasOrganismos">
+                        <a href="busqueda.html" class="nav-regular">Plagas y Enfermedades</a>
+                    </div>     
+                    <div class="nav-item seccionesPlagasOrganismos">
+                        <a href="#" class="dropdown-nav">Plagas y Enfermedades</a>
+                        <div class="nav-item-submenu">
+                            <a href="busqueda.html">Ficha Técnica</a> 
+                            <a href="galeria.html">Galería de Fotos</a>                            
+                        </div>
+                    </div>                
+                    <div class="nav-item">
+                        <a href="consejos.html" class="nav-regular">Consejos del Dr. Agro</a>
+                    </div>
+                    <div class="nav-item PlagasOrganismos">
+                        <a href="galeria.html" class="nav-regular">Galería de Fotos</a>
+                    </div>                                        
+                    <div class="nav-item">
+                        <a href="contacto.html" class="nav-regular">Contacto</a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" class="dropdown-nav">Administración</a>
+                        <div class="nav-item-submenu">
+                            <a href="adminCultivo.html">Descargar Contenido</a>
+                            <a href="elimCultivo.html">Eliminar Contenido</a>
+                        
+                            <a href="acerca-de.html">Acerca De</a>
+                            <a href="terminos.html">Términos y Condiciones</a>
+                        </div>
+                    </div> 
+                </div>
+                
+                <div class="sidebar-decoration"></div>
+                
+                <p class="sidebar-copyright">Corpoica 2014</p>
+                
+            </div>
+        </div>
+    </div>
+
+    <div id="content" class="page-content scroll">   
+
+            <div class="content-controls">
+                <a href="#" class="deploy-sidebar"></a>
+                <em>BUSQUEDA ORGANISMOS</em>
+            </div>
+
+            <div class="content">
+
+            <div class="decoration"></div>
+
+            <div class="one-half-responsive">
+
+                <div class="container no-bottom">
+                    <h4>Seleccione Busqueda</h4>
+                </div> 
+
+                <div class="container">
+                    <div class="toggle-2">
+                        <a href="#" class="deploy-toggle-2">Cultivo Agrícola</a>
+                        <div class="toggle-content">
+                            <div id="producto">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="toggle-2">
+                        <a href="#" class="deploy-toggle-2">Ciclo Fenológico</a>
+                        <div class="toggle-content">
+                            <div id="ciclo">
+                                <!--<a href="#" class="checkbox radio-two radioButton">Brotación</a>
+                                <a href="#" class="checkbox radio-two radioButton">Emergencia</a>
+                                <a href="#" class="checkbox radio-two radioButton">Desarrollo vegetativo</a>
+                                <a href="#" class="checkbox radio-two radioButton">Floración</a>
+                                <a href="#" class="checkbox radio-two radioButton">Maduración</a>
+                                <a href="#" class="checkbox radio-two radioButton">Senescencia</a>-->
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <div class="container">
+                    <div class="toggle-2">
+                        <a href="#" class="deploy-toggle-2">Parte Afectada</a>
+                        <div class="toggle-content">
+                            <div id="parte">
+                                <!--<a href="#" class="checkbox radio-two radioButton">Raiz</a>
+                                <a href="#" class="checkbox radio-two radioButton">Tallo</a>
+                                <a href="#" class="checkbox radio-two radioButton">Tubérculos</a>
+                                <a href="#" class="checkbox radio-two radioButton">Flores</a>
+                                <a href="#" class="checkbox radio-two radioButton">Fruto</a>
+                                <a href="#" class="checkbox radio-two radioButton">Hoja</a>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="decoration"></div>
+
+            <div class="one-half-responsive">
+                <div class="container">
+                    <input type="submit" class="buttonWrap button button-green contactSubmitButton" id="contactSubmitButton" value="Buscar" data-formId="contactForm" onclick="Lista_Organismos()"/>
+                </div>
+
+            </div>
+
+            <div class="decoration"></div>
+            
+            <div id="listadoEnfermedades" class="container no-bottom">
+                <!--<h4>Listado Organismos</h4>-->
+                <!--<div class="one-half-responsive">
+                    <p class="quote-item">
+                        <img src="images/general-nature/6s.jpg" alt="img">
+                        <strong>Gusano Blanco</strong><br><br>
+                        Galerías irregulares en donde dejan los excrementos. <a href="detalle.html">Leer más</a>
+                    </p>
+                </div>
+                <div class="one-half-responsive last-column">
+                    <p class="quote-item">
+                        <img src="images/general-nature/2s.jpg" alt="img">
+                        <strong>Palomilla de la Papa</strong><br><br>
+                        Presencia de excrementos que dan la apariencia de aserrín. <a href="detalle.html">Leer más</a>
+                    </p>                
+                </div>
+                <div class="one-half-responsive">
+                    <p class="quote-item">
+                        <img src="images/general-nature/3s.jpg" alt="img">
+                        <strong>Chiza</strong><br><br>
+                        Consume raices y las barras del tallo. <a href="detalle.html">Leer más</a>
+                    </p>
+                </div>
+                <div class="one-half-responsive last-column">
+                    <p class="quote-item">
+                        <img src="images/general-nature/4s.jpg" alt="img">
+                        <strong>Tiroteador</strong><br><br>
+                        Forma orificios y roeduras circulares. <a href="detalle.html">Leer más</a>
+                    </p>                
+                </div>-->
+            </div>
+            <div id="detalle" class="container no-bottom" style="display:none;">
+                <em id="div_nombre_ppal">GUSANO BLANCO</em>
+
+                <div class="decoration"></div>
+
+                <div class="one-half-responsive">
+                    <div class="container">
+                        <input type="submit" class="buttonWrap button button-green contactSubmitButton" id="contactSubmitButton" value="Volver al Listado" data-formId="contactForm" onclick="Mostrar_Listado()"/>
+                    </div>
+
+                </div>
+
+                <div class="decoration"></div>   
+
+                <div class="container no-bottom">
+                    <div class="portfolio-item-full-width">
+                        <a href="images/general-nature/3.jpg">
+                            <img id="img_ppal" class="responsive-image" src="" alt="img">
+                        </a>
+                        <!--<h4>A full width portfolio item!</h4>
+                        <p>We like portfolios a lot! We've optimized them to the extreme to make them work like a charm!</p>-->
+                    </div>
+                </div>            
+
+                <div class="decoration"></div>
+
+                <div class="container no-bottom">
+                    <h4>Ficha Técnica</h4>
+                    <!--<p>CSS Tables are awsome, no code needs to be used other than the default HTML template!</p>-->
+                </div> 
+                <div id="tbl_Ficha_Tecnica" class="container no-bottom">
+                   <!--<table cellspacing='0' class="table">
+                        <tr>
+                            <td class="table-sub-title"> Nombre cientifico:</td>
+                            <td>Premnotrypes vorax Hustache</td>
+                        </tr>
+                        <tr>
+                            <td class="table-sub-title"> Parte de la planta que afecta:</td>
+                            <td>Galerías irregulares en donde dejan los excrementos</td>
+                        </tr>
+                        <tr>
+                            <td class="table-sub-title"> Clase:</td>
+                            <td>Insecta</td>
+                        </tr>
+                        <tr>
+                            <td class="table-sub-title"> Orden:</td>
+                            <td>Coleóptera</td>
+                        </tr>
+                        <tr>
+                            <td class="table-sub-title"> Familia:</td>
+                            <td>Curculionidae</td>
+                        </tr>
+                        <tr>
+                            <td class="table-sub-title"> Genéro:</td>
+                            <td>Premnotrypes</td>
+                        </tr> 
+                        <tr>
+                            <td class="table-sub-title"> Especie:</td>
+                            <td>Premnotrypes vorax</td>
+                        </tr>        
+                    </table>-->
+                </div>
+
+                <div class="decoration"></div>
+
+                <div id="div_nombre_Comun" class="container no-bottom">
+                    <!--<h4>Nombre Común</h4>
+                    <p>
+                        Gusano blanco de la papa, gorgojo de la papa, Ichu-kuro, Papa Kuro, Gorgulho da batata
+                    </p>-->
+                </div>
+                
+                <div class="decoration"></div>
+
+                <div id="div_nombre_Cientifico" class="container no-bottom">
+                    <!--<h4>Nombre Científico</h4>
+                    <p>
+                        Premnotrypes vorax (Hustache) 
+                    </p>-->
+                </div>
+
+                <div class="decoration"></div>
+
+                <div class="container no-bottom">
+                    <h4>Clasificación Taxonómica</h4>
+                </div> 
+                <div id="tbl_Clasificacion_Taxonomica" class="container no-bottom">
+                   <!--<table cellspacing='0' class="table">
+                        <tr>
+                            <td class="table-sub-title">Clase</td>
+                            <td>Insecta</td>
+                        </tr>
+                        <tr>
+                            <td class="table-sub-title">Orden</td>
+                            <td>Coleóptera</td>
+                        </tr>
+                        <tr>
+                            <td class="table-sub-title">Familia</td>
+                            <td>Curculiónidae</td>
+                        </tr>
+                        <tr>
+                            <td class="table-sub-title">Subfamilia</td>
+                            <td>Otiorrhynchidae</td>
+                        </tr>
+                        <tr>
+                            <td class="table-sub-title">Tribu</td>
+                            <td>Premnotrypini</td>
+                        </tr>
+                        <tr>
+                            <td class="table-sub-title">Genero</td>
+                            <td>Premnotrypes</td>
+                        </tr>
+                        <tr>
+                            <td class="table-sub-title">Especie</td>
+                            <td>P. vorax (Hustache)</td>
+                        </tr>    
+                    </table>-->
+                </div>            
+
+                <div id="div_caracteristicas_grales" class="one-half-responsive">
+                    <div class="container no-bottom">
+                        <h4>Características Generales</h4>
+                    </div> 
+                    <div class="container" id="ppal_tab">
+                        <div class="tabs">
+                            <a href="#" class="tab-but tab-but-1 tab-active">Introduccíon</a>
+                            <a href="#" class="tab-but tab-but-2">Dist. Geográfica</a>    
+                        </div>
+                        <div id="tab1" class="tab-content tab-content-1">
+                            <p>
+                                prueba de un tab
+                            </p>
+                        </div>
+                        <div id="tab2" class="tab-content tab-content-2" >
+                            <p>
+                                el otro tab                 
+                            </p>
+                        </div>  
+                    </div>     
+                    <div class="container" id="secund_tab" style="visibility:hidden">
+                        <div class="tabs">
+                            <a href="#" class="tab-but tab-but-1 tab-active" id="title-tab"></a>    
+                        </div>
+                        <div id="tab_secund_1" class="tab-content tab-content-1">
+                            <!--<p>
+                                El gusano blanco de la papa, es un coleóptero  perteneciente a la familia Curculiónidae, que se caracteriza por  tener  la cabeza prolongada en forma de pico y las alas soldadas entre sí por lo cual no puede volar.  Presenta un buen desarrollo de patas especialmente las anteriores, que le permite ser un gran caminador. Se ha podido establecer que en una noche  puede llega a recorrer hasta 12 metros (Gallego, et.al). Estos insectos son de hábito nocturno, realizan actividades de apareamiento, alimentación y la búsqueda de sitios de oviposición. Como característica importante los adultos de gusano blanco se mimetizan con el suelo semejándose a un terrón, debido a que el cuerpo esta recubierto con una película muy fina de polvo que toma el color del entorno, el cual puede variar de un café rojizo, pardo oscuro a gris.  Esta característica hace que no sean fácilmente reconocidos en campo (Sánchez, et al, 2000).
+                            </p>-->
+                        </div> 
+                    </div>
+                </div>
+
+                <div class="decoration"></div>
+                <div class="container" id="Biologia_Habitat_ppal">
+                    <div class="one-half-responsive">
+                        <div class="container no-bottom">
+                            <h4>Biología y Habitat</h4>
+                        </div> 
+                        <div class="container" id="Hospederos_p">
+                            <div class="toggle-1">
+                                <a href="#" class="deploy-toggle-1">Hospederos Vegetales</a>
+                                <div class="toggle-content" id="Hospederos_H">
+                                    <!--<p>
+                                        Cuando hay ausencia del cultivo de papa el adulto de gusano blanco puede alimentarse o buscar sitios de refugio en las siguientes arvenses: Plantagolanceolata, (Llanten menor) Rumexacetocella, (Lengüilla, acedera, sangre de toro), Rumexcrispus (Lengua de vaca), Rumexobtusifolius, Raphanusraphanistrum, (rábano silvestre), Brassicanapus (colsa o canola)y Brassicacampestris (Nabo), Poligonunnepalense (Corazón herido), Kikuyo , Galinsogaparviflora (Guasca), Trifoliumrepens (Trebol), Drymariasp (Palomitas, golondrina), Siegesbeckiacordifolia (pega- pega, jicanilla, trompetilla), Salvia paleofolia (Manguipaca, salvia, yerba de sapo), Solanumningrum (rábano, hierba mora), Solanumcaripense  (Chimbalo, mamoncillo),  Capsellabursa-pastoris (pan de queso, bolsa de pastor). (Calvache, (sf); ,Valencia y Bohórquez, 1994 y Sánchez, et al, 2000).
+                                    </p>-->
+                                </div>
+                            </div>
+                        </div> 
+
+                        <div class="container" id="como_alimenta_P">
+                            <div class="toggle-1">
+                                <a href="#" class="deploy-toggle-1">Como se Alimenta</a>
+                                <div class="toggle-content" id="como_alimenta_H">
+                                    <p>
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                                        when an unknown printer took a galley of type and scrambled specimen book.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="container" id="distribucion_espacial_P">
+                            <div class="toggle-1">
+                                <a href="#" class="deploy-toggle-1">Distribución Espacial</a>
+                                <div class="toggle-content" id="distribucion_espacial_H">
+                                    <!--<p>
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                                        when an unknown printer took a galley of type and scrambled specimen book.
+                                    </p>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="one-half-responsive last-column" id="diseminacion_P">
+                        <div class="container">
+                            <div class="toggle-1">
+                                <a href="#" class="deploy-toggle-1">Diseminación</a>
+                                <div class="toggle-content" id="diseminacion_H">
+                                    <!--<p>
+                                        La principal fuente de infestación la constituye los tubérculos y los suelos infestados (Yabar, 1988). Los adultos de gusano blanco pueden llegar desde cultivos cercanos, de arvenses hospederas del insecto, de terrenos en descanso, de terrenos en preparación, de toyas o plantas espontáneas, de lugares donde se seleccionó semilla afectada y lugares de almacenamiento de papa (INIAP, 2012).  También se ha podido determinar que los adultos son atraídos por las plantas de papa (Valencia, 1989).
+                                    </p>-->
+                                </div>
+                            </div>
+                        </div> 
+
+                        <div class="container" id="ciclo_vida_P">
+                            <div class="toggle-1">
+                                <a href="#" class="deploy-toggle-1">Ciclo de Vida</a>
+                                <div class="toggle-content" id="ciclo_vida_H">
+                                    <!--<p>
+                                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+                                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
+                                        when an unknown printer took a galley of type and scrambled specimen book.
+                                    </p>-->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="container" id="comportamiento_P">
+                            <div class="toggle-1">
+                                <a href="#" class="deploy-toggle-1">Comportamiento</a>
+                                <div class="toggle-content" id="comportamiento_H">
+                                    <!--<p>
+                                        Los adultos de gusano blanco son de hábito nocturno razón por la cual es fácil de observarlos sobre el follaje de las plantas de papa. Durante el día permanecen escondidos en lugares oscuros y húmedos como la base de las plantas de papa, maleza o debajo de terrones.  La duración del ciclo de vida puede estar influenciado por la temperatura, humedad y disponibilidad de alimento (Yabar, 1988). La duración de del ciclo biológico se incrementa en condiciones de bajas temperaturas (Niño, 2004). De igual manera la longevidad del adulto se ve afectada por estos mismos factores.  Valencia en 1989 mencionó que la emergencia de los adultos de gusano blanco se ve favorecida por la humedad del suelo o con las lluvias.  Al humedecerse el suelo se facilita el rompimiento de la cámara pupal y la salida a la superficie de los adultos. (Niño, 2004). La humedad también influye en el comportamiento del adulto. En condiciones de sequía, la oviposición de P. vorax, es escasa, no se presenta (Calvache, 1986).
+                                    </p>
+                                    <p>
+                                        Con el inicio de las siembras y la aparición de las lluvias, los adultos de gusano blanco se desplazan e inicialmente buscan refugios en maleza o en plantas de papa espontáneas de cosechas anteriores, luego se desplazan a los cultivos nuevos de papa asegurando las condiciones para su alimentación y reproducción. (Niño, 2004).
+                                    </p>-->
+                                </div>
+                            </div>
+                        </div>
+                        </div>        
+                </div>
+                <div class="decoration"></div>
+
+                <div class="container no-bottom">
+                    <h4>Identificación y Medidas de Prevención</h4>
+                </div>
+
+                <div class="decoration"></div>
+
+                <div class="one-half-responsive" id="div_prevencion">
+                    <div class="container no-bottom">
+                        <h4>Parámetros de Identificación</h4>
+                    </div> 
+                    <div class="container no-bottom">              
+                        <!--<p>
+                            Las larvas forman galerías irregulares en el interior de los tubérculos en donde se observan los excrementos. Los adultos consumen el follaje de la planta dejando una forma de media luna.       
+                        </p>-->
+                    </div>      
+                </div>
+
+                <div class="one-half-responsive last-column">
+                    <div class="container no-bottom" id="div_control">
+                        <!--<h4>Manejo de Poblaciones</h4>
+                        <ul>
+                            <li>Distribución Espacial</li>
+                            <li>Manejo de la Población</li>
+                        </ul>-->
+                    </div> 
+                    <div class="container no-bottom">              
+                        <p>
+
+                        </p>
+                    </div>      
+                </div>
+            </div>           
+
+            <div class="container">
+                <div>                    
+                    <a href="#" class="goup-footer" style="margin-top:10px"></a>                    
+                </div>
+                <p class="copyright uppercase center-text no-bottom">Corpoica 2014<br> Todos los derechos reservados</p>       
+            </div>
+        </div> 
+        
+    </div>            
+</div>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
