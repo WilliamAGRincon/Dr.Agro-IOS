@@ -3,24 +3,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black">
-
-<link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/splash/splash-icon.png">
-<link rel="apple-touch-startup-image" href="images/splash/splash-screen.png"            media="screen and (max-device-width: 320px)" />  
-<link rel="apple-touch-startup-image" href="images/splash/splash-screen@2x.png"         media="(max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2)" /> 
-<link rel="apple-touch-startup-image" sizes="640x1096" href="images/splash/splash-screen@3x.png" />
-<link rel="apple-touch-startup-image" sizes="1024x748" href="images/splash/splash-screen-ipad-landscape" media="screen and (min-device-width : 481px) and (max-device-width : 1024px) and (orientation : landscape)" />
-<link rel="apple-touch-startup-image" sizes="768x1004" href="images/splash/splash-screen-ipad-portrait.png" media="screen and (min-device-width : 481px) and (max-device-width : 1024px) and (orientation : portrait)" />
-<link rel="apple-touch-startup-image" sizes="1536x2008" href="images/splash/splash-screen-ipad-portrait-retina.png"   media="(device-width: 768px)  and (orientation: portrait) and (-webkit-device-pixel-ratio: 2)"/>
-<link rel="apple-touch-startup-image" sizes="1496x2048" href="images/splash/splash-screen-ipad-landscape-retina.png"   media="(device-width: 768px) and (orientation: landscape)    and (-webkit-device-pixel-ratio: 2)"/>
-
-<title>Epsilon Mobile Framework - Version 2.0</title>
 
 <link href="styles/style.css"           rel="stylesheet" type="text/css">
 <link href="styles/framework.css"       rel="stylesheet" type="text/css">
-<link href="styles/owl.carousel.css"     rel="stylesheet" type="text/css">
-<link href="styles/owl.theme.css"       rel="stylesheet" type="text/css">
 <link href="styles/swipebox.css"         rel="stylesheet" type="text/css">
 <link href="styles/colorbox.css"         rel="stylesheet" type="text/css">
 
@@ -54,7 +39,7 @@
         var texto = "";
         var len = results.rows.length;
         for (var i = 0; i < len; i++) {
-            texto += '<h1 style="margin-left:50px"><input type="radio" name="producto" value="'+ results.rows.item(i).producto_id + '">'+ results.rows.item(i).descripcion +'<br>';
+            texto += '<h3 style="margin-left:20px;font-family:Verdana;"><input type="radio" name="producto" value="'+ results.rows.item(i).producto_id + '" />'+ results.rows.item(i).descripcion +'</h3>';
         }
         $("#producto").html(texto);
     }
@@ -62,6 +47,59 @@
     function errorCargar_productos(err) {
         console.log(err);
         alert("Error consultando listado productos" + err);
+    }
+
+    function Buscar() {
+        $("input:checkbox[name=producto]:checked").each(function () {
+            var id = $(this).val();
+            buscarOrganismoCultivo(id)
+        });
+    }
+
+    function buscarOrganismoCultivo(Id) 
+    {    
+        var path = ruta + "TATB_OrganismosProdEtapla.json";
+        //alert(path);    
+        cont = 0;
+        numeropp = 1;
+        $.getJSON("" + path + "", function(data) {   
+            $.each(data, function (i, field) {
+                if(data[i].Prod_Id === Id){
+                    Lista_OrganismosGaleria(data[i].Organismo_Id);
+                    numeropp++;
+                cont++;
+                }
+                else{
+                    $("#enfermedad").html("");
+                }
+            });           
+            
+        });
+    }
+
+    function Lista_OrganismosGaleria(Id) 
+    {    
+        var path = ruta + "TATB_Organismos.json";
+        //alert(path);
+        //var id_organismo = Id;
+        var texto = "";
+        cont = 0;
+        numeropp = 1;
+        $.getJSON("" + path + "", function(data) {   
+            $.each(data, function (i, field) {
+                if(data[i].Organismo_Id === Id){                
+                    texto += '<h3 style="margin-left:20px;font-family:Verdana;"><input type="radio" name="producto" value="'+ data[i].Organismo_Desc + '" id="'+ id +'" />'+ data[i].Organismo_Desc +'</h3>';                                   
+                    numeropp++;
+                    cont++;
+                }
+                else{
+                    texto = "";
+                }          
+                
+            });    
+            
+            $("#enfermedad").html(texto);
+        });
     }
 
 </script>
@@ -84,16 +122,10 @@
                 <div class="sidebar-section">
                     <a href="#" class="sidebar-close"></a>
                     <em>Menu</em>
-                </div>
-                <div class="sidebar-decoration"></div>         
+                </div>                               
                 
-                <!--<a href="#" class="sidebar-logo"></a>-->
-                <a href="#" class="sidebar-logo"></a>   
-                <p class="sidebar-paragraph">Tú Doctor de Confianza</p>
-              
-                
-                <div class="sidebar-decoration"></div>
-                
+                <div class="sidebar-logo"></div>   
+                               
                 <div class="sidebar-navigation">                              
                     <div class="nav-item">
                         <a href="acerca.html" class="nav-regular">Acerca de Mí</a>
@@ -131,7 +163,7 @@
                 
                 <div class="sidebar-decoration"></div>
                 
-                <p class="sidebar-copyright">Corpoica 2014</p>
+                <img src="images/dr-agro/LogoCorpoica-sintxt-Blanco.png" style="max-width:90%;margin-left:auto;margin-right:auto">
                 
             </div>
         </div>
@@ -173,16 +205,14 @@
 
             <div>
                 <div class="container">
-                    <input type="submit" class="buttonWrap button button-green contactSubmitButton" id="contactSubmitButton" value="Buscar" data-formId="contactForm"/>
+                    <input type="submit" class="buttonWrap button button-green contactSubmitButton" id="contactSubmitButton" value="Buscar" data-formId="contactForm" onclick="Buscar()"/>
                 </div>
             </div>           
             <div class="decoration"></div>        
             <div class="container borderGaleria">
             <p>CICLO DE VIDA: PAYSANDISIA ARCHON</p>
-                <div class="portfolio-item-full-width">
-                    <a href="images/dr-agro/Cicle_Paysandisia_Archon_Petita.jpg">
-                        <img class="responsive-image" src="images/dr-agro/Cicle_Paysandisia_Archon_Petita.jpg" alt="img">
-                    </a>                    
+                <div class="portfolio-item-full-width" id="pinchzoom" style="overflow:hidden">
+                        <img class="responsive-image" id="rect" src="images/dr-agro/Cicle_Paysandisia_Archon_Petita.jpg" alt="img">
                 </div>
             </div>  
                 
@@ -197,6 +227,82 @@
         
         </div>           
     </div>  
+<script src="hammer.js"></script>
+
+<script src="plugins/hammer.fakemultitouch.js"></script>
+<script src="plugins/hammer.showtouches.js"></script>
+
+<!--[if !IE]> -->
+<script>
+  // show touches doesnt work well in older IE versions due lack of support of
+  // the pointer-event css property
+  if(!Hammer.HAS_TOUCHEVENTS && !Hammer.HAS_POINTEREVENTS) {
+    Hammer.plugins.showTouches();
+  }
+</script>
+<!-- <![endif]-->
+
+<script>
+
+    if(!Hammer.HAS_TOUCHEVENTS && !Hammer.HAS_POINTEREVENTS) {
+        Hammer.plugins.fakeMultitouch();
+    }
+
+    var hammertime = Hammer(document.getElementById('pinchzoom'), {
+        preventDefault      : true,
+        transformMinScale   : 1,
+        dragBlockHorizontal : true,
+        dragBlockVertical   : true,
+        dragMinDistance     : 0
+    });
+
+    var rect = document.getElementById('rect');
+
+    var posX = 0, posY = 0,
+    scale = 1, last_scale = 1,
+    rotation = 0, last_rotation = 0;
+
+    hammertime.on('touch drag transform', function(ev) {
+        switch(ev.type) {
+            case 'touch':
+            last_scale = scale;
+            last_rotation = rotation;
+            break;
+
+            case 'drag':
+            posX = ev.gesture.deltaX;
+            posY = ev.gesture.deltaY;
+            break;
+
+            case 'transform':
+        rotation = 0;//last_rotation + ev.gesture.rotation;
+        scale = Math.max(1, Math.min(last_scale * ev.gesture.scale, 10));
+        break;
+    }
+
+    // transform!
+    var transform =
+    "translate3d(" + posX + "px," + posY + "px, 0) " +
+    "scale3d(" + scale + "," + scale + ", 1) " +
+    "rotate(" + rotation + "deg) ";
+
+    rect.style.transform = transform;
+    rect.style.oTransform = transform;
+    rect.style.msTransform = transform;
+    rect.style.mozTransform = transform;
+    rect.style.webkitTransform = transform;
+});
+
+
+    function aumentar(){
+        $('#rect').width(870)
+    }
+
+    function reducir(){
+        $('#rect').width(436) 
+    }
+
+</script>
 </body>
 </html>
 

@@ -67,7 +67,11 @@ and (width : 798px){
 }
 
 .swipebox div{
-	overflow:visible!important;
+	overflow:visible;
+}
+
+#purebaslide{
+  overflow: auto !important;
 }
 
 
@@ -120,11 +124,9 @@ and (width : 798px){
 
 #swipebox-slider .slide img {
   display: inline-block;
-  max-height: 100%;
-  max-width: 100%;
   margin: 0;
   padding: 0;
-  width: auto;
+
   height: auto;
   vertical-align: middle;
 }

@@ -5,45 +5,11 @@
     },
     "config_munge": {
         "files": {
-            "framework": {
-                "parents": {
-                    "SystemConfiguration.framework": [
-                        {
-                            "xml": "true",
-                            "count": 1
-                        }
-                    ],
-                    "AssetsLibrary.framework": [
-                        {
-                            "xml": "false",
-                            "count": 2
-                        }
-                    ],
-                    "MobileCoreServices.framework": [
-                        {
-                            "xml": "false",
-                            "count": 2
-                        }
-                    ],
-                    "CoreGraphics.framework": [
-                        {
-                            "xml": "false",
-                            "count": 2
-                        }
-                    ],
-                    "CoreMotion.framework": [
-                        {
-                            "xml": "false",
-                            "count": 1
-                        }
-                    ]
-                }
-            },
             "config.xml": {
                 "parents": {
                     "/*": [
                         {
-                            "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
+                            "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
                             "count": 1
                         },
                         {
@@ -55,19 +21,39 @@
                             "count": 1
                         },
                         {
+                            "xml": "<feature name=\"NetworkStatus\"><param name=\"ios-package\" value=\"CDVConnection\" /></feature>",
+                            "count": 1
+                        },
+                        {
                             "xml": "<feature name=\"SplashScreen\"><param name=\"ios-package\" value=\"CDVSplashScreen\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
-                        },
+                        }
+                    ]
+                }
+            },
+            "framework": {
+                "parents": {
+                    "AssetsLibrary.framework": [
                         {
-                            "xml": "<feature name=\"Device\"><param name=\"ios-package\" value=\"CDVDevice\" /></feature>",
+                            "xml": "false",
+                            "count": 2
+                        }
+                    ],
+                    "MobileCoreServices.framework": [
+                        {
+                            "xml": "false",
                             "count": 1
-                        },
+                        }
+                    ],
+                    "SystemConfiguration.framework": [
                         {
-                            "xml": "<feature name=\"Accelerometer\"><param name=\"ios-package\" value=\"CDVAccelerometer\" /></feature>",
+                            "xml": "true",
                             "count": 1
-                        },
+                        }
+                    ],
+                    "CoreGraphics.framework": [
                         {
-                            "xml": "<feature name=\"Capture\"><param name=\"ios-package\" value=\"CDVCapture\" /></feature>",
+                            "xml": "false",
                             "count": 1
                         }
                     ]
@@ -76,28 +62,21 @@
         }
     },
     "installed_plugins": {
-        "org.apache.cordova.network-information": {
-            "PACKAGE_NAME": "com.corpoica.dragro"
+        "org.apache.cordova.device": {
+            "PACKAGE_NAME": "com.example.dragro"
+        },
+        "org.apache.cordova.file": {
+            "PACKAGE_NAME": "com.example.dragro"
         },
         "org.apache.cordova.file-transfer": {
-            "PACKAGE_NAME": "com.corpoica.dragro"
+            "PACKAGE_NAME": "com.example.dragro"
+        },
+        "org.apache.cordova.network-information": {
+            "PACKAGE_NAME": "com.example.dragro"
         },
         "org.apache.cordova.splashscreen": {
-            "PACKAGE_NAME": "com.corpoica.dragro"
-        },
-        "org.apache.cordova.device": {
-            "PACKAGE_NAME": "com.corpoica.dragro"
-        },
-        "org.apache.cordova.device-motion": {
-            "PACKAGE_NAME": "com.corpoica.dragro"
-        },
-        "org.apache.cordova.media-capture": {
-            "PACKAGE_NAME": "com.corpoica.dragro"
+            "PACKAGE_NAME": "com.example.dragro"
         }
     },
-    "dependent_plugins": {
-        "org.apache.cordova.file": {
-            "PACKAGE_NAME": "com.corpoica.dragro"
-        }
-    }
+    "dependent_plugins": {}
 }

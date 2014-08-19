@@ -28,21 +28,7 @@
 	-ms-text-size-adjust: none;
 }
 
-/** {
-	appearance:normal;
-	-webkit-appearance: none;
-	-moz-appearance: none;
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	vertical-align: baseline;
-	outline: none;
-	font-size-adjust: none;
-	-webkit-text-size-adjust: none;
-	-moz-text-size-adjust: none;
-	-ms-text-size-adjust: none;
-}*/
+
 *:focus {
 	outline: none;
 }
@@ -63,16 +49,17 @@ a:hover{
 	color: #000;
 }
 
-div, a, p, img, blockquote, form, fieldset, textarea, label, iframe, code, pre {
+div{
+	display: block;
+	overflow:hidden;
+	position:relative;
+}
+
+a, p, img, blockquote, form, fieldset, textarea, label, iframe, code, pre {
 	display: block;	
 	position:relative;
 }
 
-/*div, a, p, img, blockquote, form, fieldset, textarea, input, label, iframe, code, pre {
-	display: block;
-	overflow:hidden;
-	position:relative;
-}*/
 
 p {
 	line-height: 20px;
@@ -536,7 +523,7 @@ a{
 .button-turqoise{			background-color:#16a085;	}
 .button-turqoise:active{	 background-color:#085b4b;	}
 
-.button-green{			   background-color:#27ae60;	}
+.button-green{			   background-color:#477F20;	border-radius:10px}
 .button-green:active{		background-color:#177c42;	}
 
 .button-blue{				background-color:#2980b9;	}
@@ -838,12 +825,13 @@ a{
 }
 
 .table-title{
-	font-family:'Dosis', sans-serif;
+	font-family:Verdana, sans-serif;
 	font-size:12px;
 }
 
 .table-sub-title{
-	font-family:'Dosis', sans-serif;
+	font-family:Verdana, sans-serif;
+	color:#17647f;
 	font-weight:bold;
 	font-size:12px;
 }
@@ -1382,7 +1370,7 @@ table tr:hover td{
 .toggle-1, .toggle-2, .toggle-3{
 	background-color:white; 
 	border-radius: 10px; 
-	border:1px solid #AAA; 
+	border:1px solid #65B32E; 
 	padding: 5px;
 }
 

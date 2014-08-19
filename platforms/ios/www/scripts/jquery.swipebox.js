@@ -54,6 +54,7 @@
 			init : function(index){
 				this.target.trigger('swipebox-start');
 				this.build();
+				h=50;
 				this.openSlide(index);
 				this.openImg(index);
 				this.preloadImg(index+1);
@@ -175,12 +176,12 @@
 	       				
 	       				if( distance >= swipMinDistance ){
 	       					// swipeLeft
-	       					$this.getPrev();
+	       					//$this.getPrev();
 	       				}
 
 	       				else if( distance <= - swipMinDistance ){
 	       					// swipeRight
-	       					$this.getNext();
+	       					//$this.getNext();
 	       				
 	       				}else{
 	       					// tap
@@ -289,9 +290,7 @@
 			actions : function(){
 				var $this = this;
 				
-				if( $elem.length < 2 ){
-					$('#swipebox-prev, #swipebox-next').hide();
-				}else{
+				
 					$('#swipebox-prev').bind('click touchend', function(e){
 						e.preventDefault();
 						e.stopPropagation();
@@ -305,7 +304,7 @@
 						$this.getNext();
 						$this.setTimeout();
 					});
-				}
+				
 
 				$('#swipebox-close').bind('click touchend', function(e){
 					$this.closeSlide();
@@ -332,11 +331,11 @@
 				}
 
 				$('#swipebox-prev, #swipebox-next').removeClass('disabled');
-				if(index == 0){
+				/*if(index == 0){
 					$('#swipebox-prev').addClass('disabled');
 				}else if( index == $elem.length - 1 ){
 					$('#swipebox-next').addClass('disabled');
-				}
+				}*/
 			},
 		
 			openSlide : function (index){
@@ -379,10 +378,12 @@
 				});
 				
 				img.attr('src',src);
+				img.attr('width','50%')
 			},
 			
 			getNext : function (){
-				var $this = this;
+				Aumentar();
+				/*var $this = this;
 				index = $('#swipebox-slider .slide').index($('#swipebox-slider .slide.current'));
 				if(index+1 < $elem.length){
 					index++;
@@ -395,11 +396,12 @@
 					setTimeout(function(){
 						$('#swipebox-slider').removeClass('rightSpring');
 					},500);
-				}
+				}*/
 			},
 			
 			getPrev : function (){
-				var $this = this;
+				Disminuir();
+				/*var $this = this;
 				index = $('#swipebox-slider .slide').index($('#swipebox-slider .slide.current'));
 				if(index > 0){
 					index--;
@@ -412,7 +414,7 @@
 					setTimeout(function(){
 						$('#swipebox-slider').removeClass('leftSpring');
 					},500);
-				}
+				}*/
 			},
 
 
@@ -449,3 +451,160 @@
 	}
 
 }(window, document, jQuery));
+var h=50;
+function Aumentar(){
+	h=h+10;
+	if(h<=100){
+	$('.current img').attr('width',h+'%')
+	}
+	$('.current').attr('id','prueba')
+	$('.current img').attr('id','dxy')
+	$('.current img').addClass('drag')
+	InitDragDrop();
+	
+
+}
+
+function Disminuir(){
+	h=h-10;
+	if(h>=50){
+	$('.current img').attr('width',h+'%')
+	$('.current').attr('id','prueba')
+
+}
+}
+
+
+
+var _startX = 0;            // mouse starting positions
+var _startY = 0;
+var _offsetX = 0;           // current element offset
+var _offsetY = 0;
+var _dragElement;           // needs to be passed from OnMouseDown to OnMouseMove
+var _oldZIndex = 0;         // we temporarily increase the z-index during drag
+//var _debug = $('debug');    // makes life easier
+
+
+
+
+
+function OnMouseDown(e)
+{
+    // IE is retarded and doesn't pass the event object
+    if (e == null) 
+        e = window.event; 
+    
+    // IE uses srcElement, others use target
+    var target = e.target != null ? e.target : e.srcElement;
+    
+
+
+    // for IE, left click == 1
+    // for Firefox, left click == 0
+    if ((e.button == 1 && window.event != null || 
+        e.button == 0) && 
+        target.className == 'drag')
+    {
+        // grab the mouse position
+        _startX = e.clientX;
+        _startY = e.clientY;
+        
+        
+        // bring the clicked element to the front while it is being dragged
+        _oldZIndex = target.style.zIndex;
+        target.style.zIndex = 10000;
+        
+        // we need to access the element in OnMouseMove
+        _dragElement = target;
+
+        // tell our code to start moving the element with the mouse
+        document.onmousemove = OnMouseMove;
+        
+        // cancel out any text selections
+        document.body.focus();
+
+        // prevent text selection in IE
+        document.onselectstart = function () { return false; };
+        // prevent IE from trying to drag an image
+        target.ondragstart = function() { return false; };
+        
+        // prevent text selection (except IE)
+        return false;
+    }
+}
+
+
+
+function OnMouseMove(e)
+{
+    if (e == null) 
+        var e = window.event; 
+
+    // this is the actual "drag code"
+    _dragElement.style.left = (_offsetX + e.clientX - _startX) + 'px';
+    _dragElement.style.top = (_offsetY + e.clientY - _startY) + 'px';
+       
+}
+
+
+
+function OnMouseUp(e)
+{
+    if (_dragElement != null)
+    {
+        _dragElement.style.zIndex = _oldZIndex;
+
+        // we're done with these events until the next OnMouseDown
+        document.onmousemove = null;
+        document.onselectstart = null;
+        _dragElement.ondragstart = null;
+
+        // this is how we know we're not dragging      
+        _dragElement = null;
+        
+       // _debug.innerHTML = 'mouse up';
+    }
+}
+
+
+
+
+
+function InitDragDrop()
+{
+    document.onmousedown = OnMouseDown;
+    document.onmouseup = OnMouseUp;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+function addListeners(){
+    document.getElementById('dxy').addEventListener('mousedown', mouseDown, false);
+    window.addEventListener('mouseup', mouseUp, false);
+
+}
+
+function mouseUp()
+{
+    window.removeEventListener('mouseover', divMove, true);
+}
+
+function mouseDown(e){
+  window.addEventListener('mouseover', divMove, true);
+}
+
+function divMove(e){
+    var div = document.getElementById('dxy');
+  div.style.position = 'absolute';
+  div.style.top = e.clientY + 'px';
+  div.style.left = e.clientX + 'px';
+}

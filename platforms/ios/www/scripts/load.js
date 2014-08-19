@@ -2,7 +2,8 @@ var organismos = new Array();
 var relacionesCiclo=new Array();
 var relacionesPlanta=new Array();
 var ruta = "";
-
+var id_Producto;
+var id_EtapaCiclo;
 function onLoad() {
     document.addEventListener("deviceready", onDeviceReady, false);
 }
@@ -53,7 +54,7 @@ function crear_lista_productos(tx, results) {
     var texto = "";
     var len = results.rows.length;
     for (var i = 0; i < len; i++) {
-        texto += '<h1 style="margin-left:50px"><input type="radio" name="producto" value="'+ results.rows.item(i).producto_id + '" onchange="cambioCheck(this)">'+ results.rows.item(i).descripcion +'<br>';
+        texto += '<h3 style="margin-left:20px;font-family:Verdana;"><input type="radio" name="producto" value="'+ results.rows.item(i).producto_id + '" onchange="cambioCheck(this)" />'+ results.rows.item(i).descripcion +'</h3>';
     }
     $("#producto").html(texto);
 }
@@ -74,7 +75,7 @@ function cargar_EtapasCiclo(idproducto)
         $.each(data, function (i, field) {
                 var temp=relacionesCiclo[j].split(",")
                 if(temp[1]==data[i].EtapaFen_Id&&temp[0]==idproducto)
-                texto += '<h1 style="margin-left:50px"><input type="radio" name="ciclo" value="' + data[i].EtapaFen_Id + '">' + data[i].EtapaFen_Desc + '<br>';
+                texto += '<h3 style="margin-left:20px;font-family:Verdana;"><input type="radio" onchange="cambioCheckEtapa(this)" name="ciclo" value="' + data[i].EtapaFen_Id + '" />' + data[i].EtapaFen_Desc + '</h3>';
         }); 
         }     
         $("#ciclo").html(texto);
@@ -85,6 +86,16 @@ function cambioCheck(element){
     if(element.checked){
         var id=element.getAttribute("value")
         cargar_EtapasCiclo(id)
+        id_Producto=id;
+        //cargar_PartesPlanta(id);
+    }
+}
+
+function cambioCheckEtapa(element){
+    if(element.checked){
+        var id=element.getAttribute("value")
+        //cargar_EtapasCiclo(id)
+        id_EtapaCiclo=id;
         cargar_PartesPlanta(id);
     }
 }
@@ -92,12 +103,12 @@ function cambioCheck(element){
 function cargar_relaciones_EtapasCiclo() 
 {
     var relacionesTemp=new Array();
-    var path = ruta + "TATB_Producto_Etapa_Ciclo.json";
+    var path = ruta + "TATB_ProductosEtapa.json";
     var texto = "";
 
     $.getJSON("" + path + "", function(data) {   
         $.each(data, function (i, field) {
-            relacionesCiclo.push(field.Prod_Id+","+field.Etapa_id);
+            relacionesCiclo.push(field.Prod_Id+","+field.EtapaFen_Id);
             //texto += '<h1 style="margin-left:50px"><input type="radio" name="ciclo" value="' + data[i].EtapaFen_Id + '">' + data[i].EtapaFen_Desc + '<br>';
         });      
         //$("#ciclo").html(texto); 
@@ -107,12 +118,12 @@ function cargar_relaciones_EtapasCiclo()
 function cargar_relaciones_partesPlanta() 
 {
     var relacionesTemp=new Array();
-    var path = ruta + "TATB_Producto_Parte_Planta.json";
+    var path = ruta + "TATB_ProductosEtapaPlanta.json";
     var texto = "";
 
     $.getJSON("" + path + "", function(data) {   
         $.each(data, function (i, field) {
-            relacionesPlanta.push(field.Prod_Id+","+field.PartePlanta_Id);
+            relacionesPlanta.push(field.Prod_Id+","+field.PartePlanta_Id+","+field.EtapaFen_Id);
             //texto += '<h1 style="margin-left:50px"><input type="radio" name="ciclo" value="' + data[i].EtapaFen_Id + '">' + data[i].EtapaFen_Desc + '<br>';
         });      
         //$("#ciclo").html(texto);
@@ -133,8 +144,8 @@ function cargar_PartesPlanta(id)
         $.each(data, function (i, field) {
             var temp=relacionesPlanta[j].split(",")
             //alert(temp[1]==data[i].PartePlanta_Id&&temp[0]==path+" "+temp[1]+";"+data[i].PartePlanta_Id+":"+temp[0]+" "+id)
-                if(temp[1]==data[i].PartePlanta_Id&&temp[0]==id)
-            texto += '<h1 style="margin-left:50px"><input type="radio" name="parte" value="' + data[i].PartePlanta_Id + '">' + data[i].PartePlanta_Desc + '<br>';
+                if(temp[1]==data[i].PartePlanta_Id&&temp[0]==id_Producto&&temp[2]==id_EtapaCiclo)
+            texto += '<h3 style="margin-left:20px;font-family:Verdana;"><input type="radio" name="parte"  value="' + data[i].PartePlanta_Id + '" />' + data[i].PartePlanta_Desc + '</h3>';
         });      
     }
         $("#parte").html(texto);
@@ -183,17 +194,48 @@ function Cargar_ListaEnfermedades(organismos)
     var lista = $("#listadoEnfermedades");
     lista.empty();
 
-    $.getJSON("" + path + "", function(data) {   
+    $.getJSON("" + path + "", function(data) {  
+        texto += '<h1 style="font-weight:bold;font-style:Verdana">Listado Organismos</h1>'; 
         $.each(data, function (i, field) {
             for (var j = 0; j < organismos.length; j++) {
                 if (organismos[j] === data[i].Organismo_Id) 
                 {
-                    texto += '<div class="one-half-responsive">' +
-                                '<p class="quote-item">' +
+                    texto += '<div class="decoration"></div>'+'<div style="padding-bottom:25px !important;">' +
+                                '<h3 style="font-weight:bold;font-style:Verdana;text-align:center">' + data[i].Organismo_Desc + '</h3>' +
+                                '<a onclick="Detalle_Organismo('+data[i].Organismo_Id+')"><div>' +
+                                    '<img src="'+data[i].Organismo_Foto+'" alt="img" style="border-radius:55%;width:150px;margin-left:auto;margin-right:auto">' +
+                                    '<h4 style="font-weight:bold;font-style:Verdana;text-align:center">Leer más</h4>' +
+                                '</div></a>' + '<div class="decoration"></div>' +
+                            '</div>';
+                }
+            };
+        });        
+        $("#listadoEnfermedades").html(texto);
+        Mostrar_Listado();    
+    });
+}
+
+/*function Cargar_ListaEnfermedades(organismos) 
+{
+    var path = ruta + "TATB_Organismos2.json";
+    var texto = "";
+
+    var lista = $("#listadoEnfermedades");
+    lista.empty();
+
+    $.getJSON("" + path + "", function(data) {  
+        texto += '<h2>Listado Organismos</h2>'; 
+        $.each(data, function (i, field) {
+            for (var j = 0; j < organismos.length; j++) {
+                if (organismos[j] === data[i].Organismo_Id) 
+                {
+                    alert(data[i].Organismo_Foto);
+                    texto += '<div class="one-half-responsive" style="padding-bottom:25px !important;">' +
+                                '<a onclick="Detalle_Organismo('+data[i].Organismo_Id+')"><p class="quote-item">' +
                                     '<img src="'+data[i].Organismo_Foto+'" alt="img">' +
                                     '<strong>' + data[i].Organismo_Desc + '</strong><br><br>' +
-                                    '<a onclick="Detalle_Organismo('+data[i].Organismo_Id+')" >Leer más</a>' +
-                                '</p>' +
+                                    'Leer más' +
+                                '</p></a>' +
                             '</div>';
                 }
             };
@@ -202,7 +244,7 @@ function Cargar_ListaEnfermedades(organismos)
         $("#listadoEnfermedades").html(texto);
         Mostrar_Listado();    
     });
-}
+}*/
 
 function Detalle_Organismo(id_organismo)
 {
@@ -224,6 +266,7 @@ function cargarSecciones(id_organismo){
     $.getJSON("" + path + "", function(data) {   
         $.each(data, function (i, field) {
             if(field.Organismo_Id==id_organismo){
+                $('#a_ppal').attr('href',field.Organismo_Foto)
                 $('#img_ppal').attr('src',field.Organismo_Foto)
                 var ficha_tecnica='<table cellspacing="0" class="table">';
 
@@ -249,6 +292,12 @@ function cargarSecciones(id_organismo){
                 if(field.Organismo_Familia.toUpperCase()!='NULL')
                     ficha_tecnica+='<tr><td class="table-sub-title"> Familia:</td><td>'+ field.Organismo_Familia+'</td></tr>'
 
+                 if(field.Organismi_SubFamilia.toUpperCase()!='NULL')
+                    ficha_tecnica+='<tr><td class="table-sub-title"> Subfamilia:</td><td>'+ field.Organismi_SubFamilia+'</td></tr>'
+ 
+                if(field.Organismo_Tribu.toUpperCase()!='NULL')
+                    ficha_tecnica+='<tr><td class="table-sub-title"> Tribu:</td><td>'+ field.Organismo_Tribu+'</td></tr>'
+
                 if(field.Organismo_Genero.toUpperCase()!='NULL')
                     ficha_tecnica+='<tr><td class="table-sub-title"> Genéro:</td><td><p style="font-style: italic;">'+field.Organismo_Genero+'</p></td></tr>'
 
@@ -257,38 +306,14 @@ function cargarSecciones(id_organismo){
                 //$("#tbl_Ficha_Tecnica").html(ficha_tecnica);
 
                 if(field.Organismo_Comun.toUpperCase()!='NULL')
-                    var nombre_comun='<h4>Nombre Común</h4><p>'+ field.Organismo_Comun+'</p>'
+                    var nombre_comun='<h2>Nombre Común</h2><p>'+ field.Organismo_Comun+'</p>'
                 document.getElementById('div_nombre_ppal').innerHTML='<p>'+ field.Organismo_Comun+'</p>';                
                 //$("#div_nombre_Comun").html(nombre_comun);
 
                 if(field.Organismo_Comun.toUpperCase()!='NULL')
-                    var nombre_Cientifico='<h4>Nombre Científico</h4><p>'+ nombre_cient +'</p>'
+                    var nombre_Cientifico='<h2>Nombre Científico</h2><p>'+ nombre_cient +'</p>'
                 //$("#div_nombre_Cientifico").html(nombre_Cientifico);
-                var Clasificacion_taxonomica='<table cellspacing="0" class="table">';
-
-                if(field.Organismo_Clase.toUpperCase()!='NULL')
-                    Clasificacion_taxonomica+='<tr><td class="table-sub-title"> Clase:</td><td>'+ field.Organismo_Clase +'</td></tr>'
-
-                if(field.Organismo_Orden.toUpperCase()!='NULL')
-                    Clasificacion_taxonomica+='<tr><td class="table-sub-title"> Orden:</td><td>'+field.Organismo_Orden+'</td></tr>'
-
-                if(field.Organismo_Familia.toUpperCase()!='NULL')
-                    Clasificacion_taxonomica+='<tr><td class="table-sub-title"> Familia</td><td>'+ field.Organismo_Familia+'</td></tr>'
-
-                if(field.Organismi_SubFamilia.toUpperCase()!='NULL')
-                    Clasificacion_taxonomica+='<tr><td class="table-sub-title"> Subfamilia</td><td>'+field.Organismi_SubFamilia+'</td></tr>'
-
-                if(field.Organismo_Tribu.toUpperCase()!='NULL')
-                    Clasificacion_taxonomica+='<tr><td class="table-sub-title"> Tribu</td><td>'+ field.Organismo_Tribu+'</td></tr>'
-
-                if(field.Organismo_Genero.toUpperCase()!='NULL')
-                    Clasificacion_taxonomica+='<tr><td class="table-sub-title"> Genéro:</td><td> <p style="font-style: italic;">'+field.Organismo_Genero+'</p></td></tr>'
-
-                if(field.Organismo_Especie.toUpperCase()!='NULL')
-                    Clasificacion_taxonomica+='<tr><td class="table-sub-title"> Especie:</td><td> <p style="font-style: italic;">'+field.Organismo_Especie+'</p></td></tr></table>'
-                //$("#tbl_Clasificacion_Taxonomica").html(Clasificacion_taxonomica);
-                //CargarSubsecciones(field.Organismo_Id)
-                document.getElementById('tbl_Clasificacion_Taxonomica').innerHTML=Clasificacion_taxonomica;
+                
                 document.getElementById('div_nombre_Cientifico').innerHTML=nombre_Cientifico;
                 document.getElementById('div_nombre_Comun').innerHTML=nombre_comun;
                 document.getElementById('tbl_Ficha_Tecnica').innerHTML=ficha_tecnica
@@ -317,98 +342,134 @@ function cargarSubSecciones(id_Organismo){
     var estrategias_manejo="";
     var medidas_prevencion="";
     var metodos_control="";
+    var referencias_bibliograficas="";
+    var listado_registros="";
+
     $.getJSON("" + path + "", function(data) {   
         $.each(data, function (i, field) {
             if(field.Organismo_Id==id_Organismo){
 
                 switch(field.SubSecAgro_Id){
                     case 21:{
-                        if(field.SubSecAgro_Desc.toUpperCase()!='NULL'){
-                            intro='<p>'+field.OrgSub_Desc+'</p><br /><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_21.jpg" alt="" OnError="Error_Cargar()">';
+                        if(field.OrgSub_Desc.toUpperCase()!='NULL'){
+                            intro='<p>'+field.OrgSub_Desc+'</p><br />'//<div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_21.jpg" alt="" OnError="Error_Cargar()"></div>'
                         }
                         //$("#intro").html('<p>'+field.OrgSub_Desc+'</p>');
                         break;
                     }
                     case 22:{
-                        if(field.SubSecAgro_Desc.toUpperCase()!='NULL'){
-                            geo='<p>'+field.OrgSub_Desc+'</p><br /><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_22.jpg" alt="" OnError="Error_Cargar()">';
+                        if(field.OrgSub_Desc.toUpperCase()!='NULL'){
+                            geo='<p>'+field.OrgSub_Desc+'</p><br /><div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_22.jpg" alt="" OnError="Error_Cargar()"></div>';
                         }
                         //$("#geo").html('<p>'+field.OrgSub_Desc+'</p>');
                         break;
                     }
                     case 31:{
-                        if(field.SubSecAgro_Desc.toUpperCase()!='NULL'){
-            
-                            Hospederos='<p>'+field.OrgSub_Desc+'</p><br /><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_31.jpg" alt="" OnError="Error_Cargar()">';
+                        if(field.OrgSub_Desc.toUpperCase()!='NULL'){
 
+                            Hospederos='<p>'+field.OrgSub_Desc+'</p><br />'//<div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_31.jpg" alt="" OnError="Error_Cargar()"></div>';
+                            $('#link_hospederos').attr('href',ruta+id_Organismo+"_Organismo_31.jpg")
+                            $('#img_hospederos').attr('src',ruta+id_Organismo+"_Organismo_31.jpg")
+                            $('#img_hospederos').attr('OnError','Error_Cargar()')
                         }
                         //$("#div_Hospederos").html('<p>'+field.OrgSub_Desc+'</p>');
                         break;
                     }
                     case 32:{
-                        if(field.SubSecAgro_Desc.toUpperCase()!='NULL'){
-                            como_alimenta='<p>'+field.OrgSub_Desc+'</p><br /><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_32.jpg" alt="" OnError="Error_Cargar()">'     
+                        if(field.OrgSub_Desc.toUpperCase()!='NULL'){
+                            como_alimenta='<p>'+field.OrgSub_Desc+'</p><br />'//<div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_32.jpg" alt="" OnError="Error_Cargar()"></div>'     
+                            $('#link_dano').attr('href',ruta+id_Organismo+"_Organismo_32.jpg")
+                            $('#img_dano').attr('src',ruta+id_Organismo+"_Organismo_32.jpg")
+                            $('#img_dano').attr('OnError','Error_Cargar()')
                         }
                         //$("#div_como_Alimenta").html('<p>'+field.OrgSub_Desc+'</p>');
                         break;  
                     }
                     case 33:{
-                        if(field.SubSecAgro_Desc.toUpperCase()!='NULL'){
-                            diseminacion='<p>'+field.OrgSub_Desc+'</p><br /><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_33.jpg" alt="" OnError="Error_Cargar()">'  
+                        if(field.OrgSub_Desc.toUpperCase()!='NULL'){
+                            diseminacion='<p>'+field.OrgSub_Desc+'</p><br />'//<div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_33.jpg" alt="" OnError="Error_Cargar()"></div>'  
+                            $('#link_diseminacion').attr('href',ruta+id_Organismo+"_Organismo_33.jpg")
+                            $('#img_diseminacion').attr('src',ruta+id_Organismo+"_Organismo_33.jpg")
+                            $('#img_diseminacion').attr('OnError','Error_Cargar()')
                         }
                         //$("#div_diseminacion").html('<p>'+field.OrgSub_Desc+'</p>');
                         break;  
                     }
                     case 34:{
-                        if(field.SubSecAgro_Desc.toUpperCase()!='NULL'){
-                            ciclo_vida='<p>'+field.OrgSub_Desc+'</p><br /><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_34.jpg" alt="" OnError="Error_Cargar()">'
+                        if(field.OrgSub_Desc.toUpperCase()!='NULL'){
+                            //ciclo_vida='<p>'+field.OrgSub_Desc+'</p><br /><div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_34.jpg" alt="" OnError="Error_Cargar()"></div>'
+                            //ciclo_vida='<p>'+field.OrgSub_Desc+'</p><br />';//'<div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_34.jpg" alt="" OnError="Error_Cargar()"></div>'
+                                ciclo_vida='<p>'+field.OrgSub_Desc+'</p><br />'
+                                $('#link_ciclo').attr('href',ruta+id_Organismo+"_Organismo_34.jpg")
+                                $('#img_ciclo').attr('src',ruta+id_Organismo+"_Organismo_34.jpg")
+                                $('#img_ciclo').attr('OnError','Error_Cargar()')
+                            }
+
+                            break;
                         }
-                        //$("#ciclo_vida").html('<p>'+field.OrgSub_Desc+'</p>');
-                        break;
-                    }
-                    case 35:{
-                        if(field.SubSecAgro_Desc.toUpperCase()!='NULL'){
-                            comportamiento='<p>'+field.OrgSub_Desc+'</p><br /><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_35.jpg" alt="" OnError="Error_Cargar()">'
-                        }
+                        case 35:{
+                            if(field.OrgSub_Desc.toUpperCase()!='NULL'){
+                                comportamiento='<p>'+field.OrgSub_Desc+'</p><br />'//<div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_35.jpg" alt="" OnError="Error_Cargar()"></div>'
+                                $('#link_comportamiento').attr('href',ruta+id_Organismo+"_Organismo_35.jpg")
+                                $('#img_comportamiento').attr('src',ruta+id_Organismo+"_Organismo_35.jpg")
+                                $('#img_comportamiento').attr('OnError','Error_Cargar()')
+                            }
                         //$("#div_comportamiento").html('<p>'+field.OrgSub_Desc+'</p>');
                         break;      
                     }
                     case 36:{
-                        if(field.SubSecAgro_Desc.toUpperCase()!='NULL'){
-                            distribucion_espacial='<p>'+field.OrgSub_Desc+'</p><br /><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_36.jpg" alt="" OnError="Error_Cargar()">'
+                        if(field.OrgSub_Desc.toUpperCase()!='NULL'){
+                            distribucion_espacial='<p>'+field.OrgSub_Desc+'</p><br />'//<div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_36.jpg" alt="" OnError="Error_Cargar()"></div>'
+                            $('#link_distribucion').attr('href',ruta+id_Organismo+"_Organismo_31.jpg")
+                            $('#img_distribucion').attr('src',ruta+id_Organismo+"_Organismo_31.jpg")
+                            $('#img_distribucion').attr('OnError','Error_Cargar()')
                         }
                         //$("#div_comportamiento").html('<p>'+field.OrgSub_Desc+'</p>');
                         break;      
                     }
                     case 10: {
-                        if(field.SubSecAgro_Desc.toUpperCase()!='NULL'){
-                            identificacion_prevencion=field.OrgSub_Desc+'<br /><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_10.jpg" alt="" OnError="Error_Cargar()">';
+                        if(field.OrgSub_Desc.toUpperCase()!='NULL'){
+                            identificacion_prevencion=field.OrgSub_Desc+'<br />'//<div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_10.jpg" alt="" OnError="Error_Cargar()"></div>';
+                            //$('#link_prevencion').attr('href',ruta+id_Organismo+"_Organismo_10.jpg")
+                            //$('#img_prevencion').attr('src',ruta+id_Organismo+"_Organismo_10.jpg")
                         }
                         //$("#identificacion").html('<p>'+field.OrgSub_Desc+'</p>');
                         break;
                     }
                     case 41:
                     {
-                        if(field.SubSecAgro_Desc.toUpperCase()!='NULL'){
-                            medidas_prevencion='<div class="container no-bottom"><h4>Medidas de Prevención</h4></div><div class="container no-bottom">'+
-                        '<p>'+field.OrgSub_Desc +'</p><br /><img class="responsive-image" src="'+id_Organismo+'_Organismo_41.jpg" alt="" OnError="Error_Cargar()"></div>'
-                        }
+                        if(field.OrgSub_Desc.toUpperCase()!='NULL'){
+                        /*    medidas_prevencion='<div class="container no-bottom"><h2>Medidas de Prevención</h2></div><div class="container no-bottom">'+
+                        '<p>'+field.OrgSub_Desc +'</p><br /><div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+id_Organismo+'_Organismo_41.jpg" alt="" OnError="Error_Cargar()"></div></div>'*/
+                        medidas_prevencion='<p>'+field.OrgSub_Desc+'</p><br />'//<div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_41.jpg" alt="" OnError="Error_Cargar()"></div></div>'
+                        $('#link_prevencion').attr('href',ruta+id_Organismo+"_Organismo_41.jpg")
+                            $('#img_prevencion').attr('src',ruta+id_Organismo+"_Organismo_41.jpg")
+                            $('#img_prevencion').attr('OnError','Error_Cargar()')
                     }
-                    case 42:
-                    {
-                        if(field.SubSecAgro_Desc.toUpperCase()!='NULL'){
-                            metodos_control='<div class="container no-bottom"><h4>Métodos de control</h4></div><div class="container no-bottom">'+
-                        '<p>'+field.OrgSub_Desc +'</p><br /><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_42.jpg" alt="" OnError="Error_Cargar()"></div>'
-                        }
-                    }
-                    case 50:
-                    {
-
-                    }
-                    case 60:
-                    {
-
-                    }
+                }
+                case 42:
+                {
+                    if(field.OrgSub_Desc.toUpperCase()!='NULL'){
+                       /* metodos_control='<div class="container no-bottom"><h2>Métodos de control</h2></div><div class="container no-bottom">'+
+                       '<p>'+field.OrgSub_Desc +'</p><br /><div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_42.jpg" alt="" OnError="Error_Cargar()"></div></div>'*/
+                       metodos_control='<p>'+field.OrgSub_Desc+'</p><br />'//<div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_42.jpg" alt="" OnError="Error_Cargar()"></div></div>'
+                        $('#link_control').attr('href',ruta+id_Organismo+"_Organismo_42.jpg")
+                        $('#img_control').attr('src',ruta+id_Organismo+"_Organismo_42.jpg")
+                        $('#img_control').attr('OnError','Error_Cargar()')
+                   }
+               }
+               case 50:
+               {
+                if(field.OrgSub_Desc.toUpperCase()!='NULL'){
+                    listado_registros='<p>'+field.OrgSub_Desc +'</p><br /><div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_50.jpg" alt="" OnError="Error_Cargar()"></div></div>'
+                }
+            }
+            case 60:
+            {
+                if(field.OrgSub_Desc.toUpperCase()!='NULL'){
+                    referencias_bibliograficas='<p>'+field.OrgSub_Desc +'</p><br /><div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_60.jpg" alt="" OnError="Error_Cargar()"></div></div>'
+                }
+            }
                 }
 
 
@@ -416,22 +477,23 @@ function cargarSubSecciones(id_Organismo){
             }
         });
             if(intro!="" && geo!=""){
-                //document.getElementById('tab1').innerHTML=intro;
-                //document.getElementById('tab2').innerHTML=geo;
-                                carac_grales='<div class="container no-bottom"><h4>Características Generales</h4></div>'+
-                                '<div class="container"><div class="tabs"><a href="#" class="tab-but tab-but-1 tab-active">Introduccíon</a>'+
-                                '<a href="tab2" class="tab-but tab-but-2" >Dist. Geográfica</a> </div><div class="tab-content tab-content-1">'+intro+'</div><div class="tab-content tab-content-2" id="tab2">'+geo+'</div></div>';
-                                document.getElementById('div_caracteristicas_grales').innerHTML=carac_grales;
+                document.getElementById('tab1').innerHTML=intro;
+                document.getElementById('tab2').innerHTML=geo;
+                                // carac_grales='<div class="container no-bottom"><h4>Características Generales</h4></div>'+
+                                // '<div class="container"><div class="tabs"><a href="#" class="tab-but tab-but-1 tab-active">Introduccíon</a>'+
+                                // '<a href="tab2" class="tab-but tab-but-2" >Dist. Geográfica</a> </div><div class="tab-content tab-content-1">'+intro+'</div><div class="tab-content tab-content-2" id="tab2">'+geo+'</div></div>';
+                                // document.getElementById('div_caracteristicas_grales').innerHTML=carac_grales;
                 }else if(intro!=""){
-                    carac_grales='<div class="container no-bottom"><h4>Características Generales</h4></div>'+
+                    carac_grales='<div class="container no-bottom"><h2>Características Generales</h2></div>'+
                     '<div class="container"><div class="tabs"><a href="#" class="tab-but tab-but-1 tab-active">Introduccíon</a>'+
                     '</div><div class="tab-content tab-content-1">'+intro+'</div></div>'
+                    document.getElementById('div_caracteristicas_grales').innerHTML=carac_grales;
                     //document.getElementById('secund_tab').style.visibility = "visible";
                     //document.getElementById('ppal_tab').style.visibility = "hidden";
                     //document.getElementById('title-tab').innerHTML='<p>'+Introdución+'</p>';
                     //document.getElementById('tab_secund_1').innerHTML=intro;
                 }else if(geo!=""){
-                    carac_grales='<div class="container no-bottom"><h4>Características Generales</h4></div>'+
+                    carac_grales='<div class="container no-bottom"><h2>Características Generales</h2></div>'+
                     '<div class="container"><div class="tabs"><a href="#" class="tab-but tab-but-1 tab-active" >Dist. Geográfica</a>'+
                     '</div><div class="tab-content tab-content-1">'+geo+'</div></div>'
                     document.getElementById('div_caracteristicas_grales').innerHTML=carac_grales;
@@ -478,25 +540,107 @@ function cargarSubSecciones(id_Organismo){
                 }else{
                     document.getElementById('Biologia_Habitat_ppal').innerHTML="";
                 }
-                if(metodos_control!=""){
-                    document.getElementById('div_control').innerHTML=metodos_control;   
+                if(metodos_control!="" && medidas_prevencion!=""){
+                    document.getElementById('Prevencion_H').innerHTML=medidas_prevencion;
+                    document.getElementById('control_H').innerHTML=metodos_control;
+                }else if(metodos_control!=""){
+                    document.getElementById('Prevencion_P').innerHTML="";
+                    document.getElementById('control_H').innerHTML=metodos_control;
+                }else if(medidas_prevencion!=""){
+                    document.getElementById('Prevencion_P').innerHTML=medidas_prevencion;
+                    document.getElementById('control_H').innerHTML="";
                 }else{
-                    document.getElementById('div_control').innerHTML="";    
-                }
-                if(medidas_prevencion!=""){
-                        document.getElementById('div_prevencion').innerHTML=medidas_prevencion; 
+                    document.getElementById('Estrategias_Manejo_ppal').innerHTML="";
+                }    
+
+                if(referencias_bibliograficas!=""){
+                    document.getElementById('bibliografia_H').innerHTML=referencias_bibliograficas; 
                 }else{
-                    document.getElementById('div_prevencion').innerHTML=""; 
+                    document.getElementById('bibliografia_P').innerHTML=""; 
                 }
+
+                if(listado_registros!=""){
+                    document.getElementById('registros_H').innerHTML=listado_registros; 
+                }else{
+                    document.getElementById('registros_P').innerHTML=""; 
+                }            
             });
 }
 
 function Error_Cargar() {
 window.event.srcElement.style.display = "None";
+//element.style.display = "none";
 }
+
+function asignarZoom(){
+    //var imagenes=$('<img/>');
+    var list = document.getElementsByClassName("pinchzoom")
+    for(var i=0;i<list.length;i++){
+        //alert(list[i].getAttribute("src"))
+        crearZoom(list[i])
+    }
+    //alert(list.length)
+    //$("<img/>")
+    //.load(function() { alert("image loaded correctly"); })
+    //.error(function() { Error_Cargar()})
+}
+
 
 function Mostrar_Listado()
 {
     $("#detalle").css("display", "none");
     $("#listadoEnfermedades").css("display", "block");
+}
+
+function crearZoom(element){
+    if(!Hammer.HAS_TOUCHEVENTS && !Hammer.HAS_POINTEREVENTS) {
+        Hammer.plugins.fakeMultitouch();
+    }
+
+    //var hammertime = Hammer(document.getElementById('pinchzoom'), {
+    var hammertime = Hammer(element, {
+        preventDefault      : true,
+        transformMinScale   : 1,
+        dragBlockHorizontal : true,
+        dragBlockVertical   : true,
+        dragMinDistance     : 0
+    });
+
+    //var rect = document.getElementById('rect');parentElement.firstChild
+    var rect=element.firstChild;
+
+    var posX = 0, posY = 0,
+    scale = 1, last_scale = 1,
+    rotation = 0, last_rotation = 0;
+
+    hammertime.on('touch drag transform', function(ev) {
+        switch(ev.type) {
+            case 'touch':
+            last_scale = scale;
+            last_rotation = rotation;
+            break;
+
+            case 'drag':
+            posX = ev.gesture.deltaX;
+            posY = ev.gesture.deltaY;
+            break;
+
+            case 'transform':
+        rotation = 0;//last_rotation + ev.gesture.rotation;
+        scale = Math.max(1, Math.min(last_scale * ev.gesture.scale, 10));
+        break;
+    }
+
+    // transform!
+    var transform =
+    "translate3d(" + posX + "px," + posY + "px, 0) " +
+    "scale3d(" + scale + "," + scale + ", 1) " +
+    "rotate(" + rotation + "deg) ";
+
+    rect.style.transform = transform;
+    rect.style.oTransform = transform;
+    rect.style.msTransform = transform;
+    rect.style.mozTransform = transform;
+    rect.style.webkitTransform = transform;
+});
 }

@@ -2,7 +2,6 @@ function configurar_db() {
 
     function execute(tx) {
         tx.executeSql('CREATE TABLE IF NOT EXISTS productos (producto_id, descripcion)');
-        tx.executeSql('CREATE TABLE IF NOT EXISTS organismos (organismo_id, imagen1, producto_id)');
     }
 
     function error(error) {

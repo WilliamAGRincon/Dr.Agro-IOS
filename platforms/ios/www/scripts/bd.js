@@ -7,7 +7,11 @@ function configurar_db() {
 
     function execute(tx) {
         tx.executeSql('CREATE TABLE IF NOT EXISTS productos (producto_id, descripcion)');
-        //tx.executeSql('CREATE TABLE IF NOT EXISTS organismos (organismo_id, imagen1, producto_id)');
+        tx.executeSql('CREATE TABLE IF NOT EXISTS versiones (version_id, numero)');
+    }
+
+    function IngresarVersion(tx) {
+        tx.executeSql('INSERT INTO versiones (version_id, numero) VALUES (1, 0)');
     }
 
     function error(error) {
@@ -20,19 +24,35 @@ function configurar_db() {
 
     var db = window.openDatabase("bd_doctoragro", "1.0", "Listado Productos", 200000);
     db.transaction(execute, error, exito);
+    db.transaction(IngresarVersion, error, exito);
 
 }
 
 function guardarListaProductos() {
-    var db = window.openDatabase("bd_doctoragro", "1.0", "Guardar Producto", 100000);
-    db.transaction(EliminarListaOrganismos, ErrorOperacion, OperacionEfectuada);
-    db.transaction(EliminarListaProductos, ErrorOperacion, OperacionEfectuada);
-    db.transaction(GuardarProducto, ErrorOperacion, OperacionEfectuada);
 
-    setTimeout(function() {
-        Crear_ListaOrganismos(organismos);
-        organismos = new Array();
-    }, 2000);
+    var networkState = navigator.connection.type;
+
+    if(networkState === "wifi" || networkState === "2g" || networkState === "3g" || networkState === "4g") {
+
+        $("#loader").text("Descargando...");
+        $("#status").fadeIn();
+        $("#preloader").fadeIn();
+
+        var db = window.openDatabase("bd_doctoragro", "1.0", "Guardar Producto", 100000);
+        db.transaction(EliminarListaProductos, ErrorOperacion, OperacionEfectuada);
+        db.transaction(GuardarProducto, ErrorOperacion, OperacionEfectuada);
+
+        setTimeout(function() {
+            
+            Crear_ListaOrganismos(organismos);
+            organismos = new Array();
+            
+        }, 2000);
+
+    }
+    else {
+        alert("Debe tener conexión a internet");
+    }
 }
 
 function GuardarProducto(tx) {
@@ -84,7 +104,10 @@ function Crear_ListaOrganismos(organismos)
                     //DescargarImagenesOrganismos();
                 }
             }
-        });    
+        });
+        $("#status").fadeOut();
+        $("#preloader").fadeOut();
+        alert("Descarga de contenido exitosa!!");    
     });
 }
 
@@ -95,9 +118,10 @@ function descargar(remoteFile) {
     //alert(localFileName);
     
     window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
+
         fileSystem.root.getFile(localFileName, {create: true, exclusive: false}, function(fileEntry) {
             //var localPath = fileEntry.fullPath;
-            var localPath = remoteFile.substring(remoteFile.lastIndexOf('/') + 1, remoteFile.length);
+            var localPath = fileEntry.fullPath;
             if (device.platform === "Android" && localPath.indexOf("file://") === 0) {
                 localPath = localPath.substring(7);
             }
@@ -107,12 +131,16 @@ function descargar(remoteFile) {
 
             }, fail);
         }, fail);
+
     }, fail);
 }
 
 function descargarImagesSubseccion(id_organismo){
-    var ruta2 = "https://dl.dropboxusercontent.com/u/75467020/";
-    var path = ruta2 + "TATB_Fotos2.json";
+
+    var ruta = window.localStorage.getItem("ruta");
+    //var ruta2 = "https://dl.dropboxusercontent.com/u/75467020/";
+    var path = ruta + "TATB_Fotos2.json";
+
     $.getJSON("" + path + "", function(data) {   
         $.each(data, function (i, field) {
             var imagen=field.Foto_Url;
@@ -122,18 +150,19 @@ function descargarImagesSubseccion(id_organismo){
             if(idBicho==id_organismo){
                 //alert(imagen);
                 window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSystem) {
-                        fileSystem.root.getFile(nombreImg, {create: true, exclusive: false}, function(fileEntry) {
-                            //var localPath = fileEntry.fullPath;
-                            var localPath = imagen.substring(imagen.lastIndexOf('/') + 1, imagen.length);
-                            if (device.platform === "Android" && localPath.indexOf("file://") === 0) {
-                                localPath = localPath.substring(7);
-                            }
-                            var ft = new FileTransfer();
-                            ft.download(encodeURI(imagen),
-                            fileSystem.root.toURL() + localPath, function(entry) {
-                            }, fail);
+
+                    fileSystem.root.getFile(nombreImg, {create: true, exclusive: false}, function(fileEntry) {
+                        var localPath = fileEntry.fullPath;
+                        if (device.platform === "Android" && localPath.indexOf("file://") === 0) {
+                            localPath = localPath.substring(7);
+                        }
+                        var ft = new FileTransfer();
+                        ft.download(encodeURI(imagen),
+                        fileSystem.root.toURL() + localPath, function(entry) {
                         }, fail);
                     }, fail);
+
+                }, fail);
             }
         })
     });
@@ -145,12 +174,7 @@ function EliminarListaProductos(tx) {
 }
 
 //Elimina los registros de la tabla organismos 
-function EliminarListaOrganismos(tx) {
-    
-    /*tx.executeSql("SELECT * FROM organismos", [], eliminar_imagenes_organismos, function (error) {
-        console.log("Error consultado organismos: " + error)
-    });*/
-    
+function EliminarListaOrganismos(tx) {    
     tx.executeSql('DELETE FROM organismos');
 }
 
@@ -172,16 +196,6 @@ function  eliminar_imagenes_organismos(tx, results) {
     }
 }
 
-//Funcion exito
-function success(entry) {
-    console.log("Removal succeeded");
-}
-
-//Funcion Fallo
-function fail(error) {
-    console.log(error.code);
-}
-
 //Funcion que permite elmiminar los id de organismos repetidos
 function eliminateDuplicates(arr) {
   var i,
@@ -196,6 +210,16 @@ function eliminateDuplicates(arr) {
     out.push(i);
   }
   return out;
+}
+
+//Funcion exito
+function success(entry) {
+    console.log("Removal succeeded");
+}
+
+//Funcion Fallo
+function fail(error) {
+    console.log(error.code);
 }
 
 // Transaction error callback
