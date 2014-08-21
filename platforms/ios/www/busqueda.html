@@ -14,12 +14,31 @@
     <link rel="apple-touch-startup-image" sizes="1536x2008" href="images/splash/splash-screen-ipad-portrait-retina.png"   media="(device-width: 768px)	and (orientation: portrait)	and (-webkit-device-pixel-ratio: 2)"/>
     <link rel="apple-touch-startup-image" sizes="1496x2048" href="images/splash/splash-screen-ipad-landscape-retina.png"   media="(device-width: 768px)	and (orientation: landscape)	and (-webkit-device-pixel-ratio: 2)"/>
 
-    <link href="styles/style.css"           rel="stylesheet" type="text/css">
-    <link href="styles/framework.css"       rel="stylesheet" type="text/css">
-    <link href="styles/owl.carousel.css"     rel="stylesheet" type="text/css">
-    <link href="styles/owl.theme.css"       rel="stylesheet" type="text/css">
-    <link href="styles/swipebox.css"         rel="stylesheet" type="text/css">
-    <link href="styles/colorbox.css"         rel="stylesheet" type="text/css">
+    <link href="styles/style.css"               rel="stylesheet" type="text/css">
+    <link href="styles/framework.css"           rel="stylesheet" type="text/css">
+    <link href="styles/owl.carousel.css"        rel="stylesheet" type="text/css">
+    <link href="styles/owl.theme.css"           rel="stylesheet" type="text/css">
+    <link href="styles/swipebox.css"            rel="stylesheet" type="text/css">
+    <link href="styles/colorbox.css"            rel="stylesheet" type="text/css">
+    <link href="styles/jquery-ui.css"           rel="stylesheet" type="text/css">
+    <link href="styles/jquery-ui.theme.css"     rel="stylesheet" type="text/css">
+    <link href="styles/jquery-ui.structure.css" rel="stylesheet" type="text/css">
+    <style type="text/css">
+        .ui-widget-header{
+            border: 1px solid #477F20 !important;
+            background-color: #477F20 !important;
+            background: #477F20 !important;
+        }
+
+
+        .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+            color: #FFFFFF !important;  
+        }
+        .ui-dialog .ui-dialog-buttonpane button{
+            background:#477F20 !important;
+            border: 1px solid #477F20 !important;
+        }
+    </style>
 
     <script type="text/javascript" src="scripts/jquery.js"></script>
     <script type="text/javascript" src="scripts/jqueryui.js"></script>
@@ -29,6 +48,8 @@
     <script type="text/javascript" src="scripts/snap.js"></script>
     <script type="text/javascript" src="scripts/contact.js"></script>
     <script type="text/javascript" src="scripts/custom.js"></script>
+    <script type='text/javascript' src='scripts/basic.js'></script>
+    <script type="text/javascript" src="scripts/jquery-ui.js"></script>
     <script type="text/javascript" src="scripts/framework.js"></script>
     <script type="text/javascript" src="scripts/framework.launcher.js"></script>
     <script type="text/javascript" src="scripts/menuHeight.js"></script>
@@ -211,10 +232,7 @@
                 <div class="decoration"></div>  
                 <div class="container no-bottom">
                     <div class="portfolio-item-full-width">
-                        <a href="" id="a_ppal" class="swipebox">
-                            <img id="img_ppal" class="responsive-image" src="" alt="img">
-                        </a>  
-                        <!--<img id="img_ppal" class="responsive-image" src="" alt="img">-->
+                        <img id="img_ppal" class="responsive-image" src="" alt="img" onclick="javascript:abrirModal(this)"> 
                     </div>
                 </div>            
 
@@ -276,10 +294,7 @@
                                 <div class="toggle-content">
                                     <div id="Hospederos_H"></div>
                                     <div class="portfolio-item-full-width">
-                                        <a href="" id="link_hospederos" class="swipebox">
-                                            <!--<img id="img_hospederos" class="responsive-image" src="" alt="" OnError="Error_Cargar()">-->
-                                            <img id="img_hospederos" class="responsive-image" src="" alt="" >
-                                        </a>                                                
+                                        <img id="img_hospederos" class="responsive-image" src="" alt="" onclick="javascript:abrirModal(this)" >
                                     </div>
                                 </div>
                             </div>
@@ -292,10 +307,7 @@
 
                                     <div id="como_alimenta_H"></div>
                                     <div class="portfolio-item-full-width">
-                                        <a href="" id="link_dano" class="swipebox">
-                                            <!--<img id="img_dano" class="responsive-image" src="" alt="" OnError="Error_Cargar()">-->
-                                            <img id="img_dano" class="responsive-image" src="" alt="" >
-                                        </a>                                                
+                                        <img id="img_dano" class="responsive-image" src="" alt="" onclick="javascript:abrirModal(this)">
                                     </div>
                                 </div>
                             </div>
@@ -309,10 +321,7 @@
                                 <div class="toggle-content" >
                                     <div id="diseminacion_H"></div>
                                     <div class="portfolio-item-full-width">
-                                        <a href="" id="link_diseminacion" class="swipebox">
-                                            <!--<img id="img_diseminacion" class="responsive-image" src="" alt="" OnError="Error_Cargar()">-->
-                                            <img id="img_diseminacion" class="responsive-image" src="" alt="" >
-                                        </a>                                                
+                                        <img id="img_diseminacion" class="responsive-image" src="" alt="" onclick="javascript:abrirModal(this)">
                                     </div>
                                 </div>
                             </div>
@@ -324,10 +333,7 @@
                                 <div class="toggle-content">
                                     <div id="ciclo_vida_H"></div>
                                     <div class="portfolio-item-full-width">
-                                        <a href="" id="link_ciclo" class="swipebox">
-                                            <!--<img id="img_ciclo" class="responsive-image" src="" alt="" style="width:80%; height=auto" OnError="Error_Cargar()">-->
-                                            <img id="img_ciclo" class="responsive-image" src="" alt="" style="width:80%; height=auto">
-                                        </a>                                                
+                                        <img id="img_ciclo" class="responsive-image" src="" alt="" onclick="javascript:abrirModal(this)">
                                     </div>
                                 </div>
                             </div>
@@ -339,10 +345,7 @@
                                 <div class="toggle-content">
                                     <div id="comportamiento_H"></div>
                                     <div class="portfolio-item-full-width">
-                                        <a href="" id="link_comportamiento" class="swipebox">
-                                            <!--<img id="img_comportamiento" class="responsive-image" src="" alt="" OnError="Error_Cargar()">-->
-                                            <img id="img_comportamiento" class="responsive-image" src="" alt="">
-                                        </a>                                                
+                                        <img id="img_comportamiento" class="responsive-image" src="" alt="" onclick="javascript:abrirModal(this)">
                                     </div>
                                 </div>
                             </div>
@@ -353,10 +356,7 @@
                                 <div class="toggle-content" >
                                     <div id="distribucion_espacial_H"></div>
                                     <div class="portfolio-item-full-width">
-                                        <a href="" id="link_distribucion" class="swipebox">
-                                            <!--<img id="img_distribucion" class="responsive-image" src="" alt="" OnError="Error_Cargar()">-->
-                                            <img id="img_distribucion" class="responsive-image" src="" alt="">
-                                        </a>                                                
+                                        <img id="img_distribucion" class="responsive-image" src="" alt="" onclick="javascript:abrirModal(this)">
                                     </div>
                                 </div>
                             </div>
@@ -381,10 +381,7 @@
                                 <div class="toggle-content">
                                     <div id="Prevencion_H"></div>
                                     <div class="portfolio-item-full-width">
-                                        <a href="" id="link_prevencion" class="swipebox">
-                                            <!--<img id="img_prevencion" class="responsive-image" src="" alt="" OnError="Error_Cargar()">-->
-                                            <img id="img_prevencion" class="responsive-image" src="" alt="">
-                                        </a>                                                
+                                        <img id="img_prevencion" class="responsive-image" src="" alt="" onclick="javascript:abrirModal(this)">
                                     </div>
                                 </div>
                             </div>
@@ -396,10 +393,7 @@
                                 <div class="toggle-content">
                                     <div id="control_H"></div>
                                     <div class="portfolio-item-full-width">
-                                        <a href="" id="link_control" class="swipebox">
-                                            <!--<img id="img_control" class="responsive-image" src="" alt="" OnError="Error_Cargar()">-->
-                                            <img id="img_control" class="responsive-image" src="" alt="">
-                                        </a>                                                
+                                        <img id="img_control" class="responsive-image" src="" alt="" onclick="javascript:abrirModal(this)">
                                     </div>
                                 </div>
                             </div>
@@ -436,6 +430,16 @@
                     </div>
 
                 </div>     
+            </div>
+
+            <div id="basic-modal-content" style="display:none" >
+        
+            <div id="pinchzoom">
+                <div>
+                    <!-- <img id="rect" src="monalisa.jpg" width="800" height="800" ondragstart="return false" alt=""/> -->
+                    <img id="rect" width="436" height="auto" src="" style="float: none;">
+                </div>
+            </div>
             </div>           
 
             <div class="container">
@@ -448,7 +452,7 @@
         
     </div>            
 </div>
-<script src="hammer.js"></script>
+<script src="scripts/hammer.js"></script>
 
 <script src="plugins/hammer.fakemultitouch.js"></script>
 <script src="plugins/hammer.showtouches.js"></script>

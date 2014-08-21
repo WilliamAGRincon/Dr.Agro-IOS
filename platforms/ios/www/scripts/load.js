@@ -203,7 +203,7 @@ function Cargar_ListaEnfermedades(organismos)
                     texto += '<div class="decoration"></div>'+'<div style="padding-bottom:25px !important;">' +
                                 '<h3 style="font-weight:bold;font-style:Verdana;text-align:center">' + data[i].Organismo_Desc + '</h3>' +
                                 '<a onclick="Detalle_Organismo('+data[i].Organismo_Id+')"><div>' +
-                                    '<img src="'+data[i].Organismo_Foto+'" alt="img" style="border-radius:55%;width:150px;margin-left:auto;margin-right:auto">' +
+                                    '<img src="'+ruta+data[i].Organismo_Id+"_Organismo_0.jpg"+'" alt="img" style="border-radius:55%;width:150px;margin-left:auto;margin-right:auto">' +
                                     '<h4 style="font-weight:bold;font-style:Verdana;text-align:center">Leer más</h4>' +
                                 '</div></a>' + '<div class="decoration"></div>' +
                             '</div>';
@@ -266,8 +266,8 @@ function cargarSecciones(id_organismo){
     $.getJSON("" + path + "", function(data) {   
         $.each(data, function (i, field) {
             if(field.Organismo_Id==id_organismo){
-                $('#a_ppal').attr('href',field.Organismo_Foto)
-                $('#img_ppal').attr('src',field.Organismo_Foto)
+                //$('#a_ppal').attr('href',field.Organismo_Foto)
+                $('#img_ppal').attr('src',ruta+field.Organismo_Id+"_Organismo_0.jpg")
                 var ficha_tecnica='<table cellspacing="0" class="table">';
 
                 if(field.Organismo_Genero.toUpperCase()!='NULL')
@@ -368,7 +368,7 @@ function cargarSubSecciones(id_Organismo){
                         if(field.OrgSub_Desc.toUpperCase()!='NULL'){
 
                             Hospederos='<p>'+field.OrgSub_Desc+'</p><br />'//<div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_31.jpg" alt="" OnError="Error_Cargar()"></div>';
-                            $('#link_hospederos').attr('href',ruta+id_Organismo+"_Organismo_31.jpg")
+                            
                             $('#img_hospederos').attr('src',ruta+id_Organismo+"_Organismo_31.jpg")
                             $('#img_hospederos').attr('OnError','Error_Cargar()')
                         }
@@ -378,7 +378,7 @@ function cargarSubSecciones(id_Organismo){
                     case 32:{
                         if(field.OrgSub_Desc.toUpperCase()!='NULL'){
                             como_alimenta='<p>'+field.OrgSub_Desc+'</p><br />'//<div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_32.jpg" alt="" OnError="Error_Cargar()"></div>'     
-                            $('#link_dano').attr('href',ruta+id_Organismo+"_Organismo_32.jpg")
+                            
                             $('#img_dano').attr('src',ruta+id_Organismo+"_Organismo_32.jpg")
                             $('#img_dano').attr('OnError','Error_Cargar()')
                         }
@@ -388,7 +388,7 @@ function cargarSubSecciones(id_Organismo){
                     case 33:{
                         if(field.OrgSub_Desc.toUpperCase()!='NULL'){
                             diseminacion='<p>'+field.OrgSub_Desc+'</p><br />'//<div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_33.jpg" alt="" OnError="Error_Cargar()"></div>'  
-                            $('#link_diseminacion').attr('href',ruta+id_Organismo+"_Organismo_33.jpg")
+                            
                             $('#img_diseminacion').attr('src',ruta+id_Organismo+"_Organismo_33.jpg")
                             $('#img_diseminacion').attr('OnError','Error_Cargar()')
                         }
@@ -400,7 +400,7 @@ function cargarSubSecciones(id_Organismo){
                             //ciclo_vida='<p>'+field.OrgSub_Desc+'</p><br /><div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_34.jpg" alt="" OnError="Error_Cargar()"></div>'
                             //ciclo_vida='<p>'+field.OrgSub_Desc+'</p><br />';//'<div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_34.jpg" alt="" OnError="Error_Cargar()"></div>'
                                 ciclo_vida='<p>'+field.OrgSub_Desc+'</p><br />'
-                                $('#link_ciclo').attr('href',ruta+id_Organismo+"_Organismo_34.jpg")
+                                
                                 $('#img_ciclo').attr('src',ruta+id_Organismo+"_Organismo_34.jpg")
                                 $('#img_ciclo').attr('OnError','Error_Cargar()')
                             }
@@ -410,7 +410,7 @@ function cargarSubSecciones(id_Organismo){
                         case 35:{
                             if(field.OrgSub_Desc.toUpperCase()!='NULL'){
                                 comportamiento='<p>'+field.OrgSub_Desc+'</p><br />'//<div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_35.jpg" alt="" OnError="Error_Cargar()"></div>'
-                                $('#link_comportamiento').attr('href',ruta+id_Organismo+"_Organismo_35.jpg")
+                                
                                 $('#img_comportamiento').attr('src',ruta+id_Organismo+"_Organismo_35.jpg")
                                 $('#img_comportamiento').attr('OnError','Error_Cargar()')
                             }
@@ -420,7 +420,7 @@ function cargarSubSecciones(id_Organismo){
                     case 36:{
                         if(field.OrgSub_Desc.toUpperCase()!='NULL'){
                             distribucion_espacial='<p>'+field.OrgSub_Desc+'</p><br />'//<div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_36.jpg" alt="" OnError="Error_Cargar()"></div>'
-                            $('#link_distribucion').attr('href',ruta+id_Organismo+"_Organismo_31.jpg")
+                            
                             $('#img_distribucion').attr('src',ruta+id_Organismo+"_Organismo_31.jpg")
                             $('#img_distribucion').attr('OnError','Error_Cargar()')
                         }
@@ -442,7 +442,7 @@ function cargarSubSecciones(id_Organismo){
                         /*    medidas_prevencion='<div class="container no-bottom"><h2>Medidas de Prevención</h2></div><div class="container no-bottom">'+
                         '<p>'+field.OrgSub_Desc +'</p><br /><div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+id_Organismo+'_Organismo_41.jpg" alt="" OnError="Error_Cargar()"></div></div>'*/
                         medidas_prevencion='<p>'+field.OrgSub_Desc+'</p><br />'//<div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_41.jpg" alt="" OnError="Error_Cargar()"></div></div>'
-                        $('#link_prevencion').attr('href',ruta+id_Organismo+"_Organismo_41.jpg")
+                        
                             $('#img_prevencion').attr('src',ruta+id_Organismo+"_Organismo_41.jpg")
                             $('#img_prevencion').attr('OnError','Error_Cargar()')
                     }
@@ -453,7 +453,7 @@ function cargarSubSecciones(id_Organismo){
                        /* metodos_control='<div class="container no-bottom"><h2>Métodos de control</h2></div><div class="container no-bottom">'+
                        '<p>'+field.OrgSub_Desc +'</p><br /><div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_42.jpg" alt="" OnError="Error_Cargar()"></div></div>'*/
                        metodos_control='<p>'+field.OrgSub_Desc+'</p><br />'//<div class="portfolio-item-full-width pinchzoom" style="overflow:hidden"><img class="responsive-image" src="'+ruta+id_Organismo+'_Organismo_42.jpg" alt="" OnError="Error_Cargar()"></div></div>'
-                        $('#link_control').attr('href',ruta+id_Organismo+"_Organismo_42.jpg")
+                        
                         $('#img_control').attr('src',ruta+id_Organismo+"_Organismo_42.jpg")
                         $('#img_control').attr('OnError','Error_Cargar()')
                    }
